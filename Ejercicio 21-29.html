@@ -137,7 +137,7 @@
   document.getElementById("ejercicio24").innerHTML = vocalCheck(["B", "C", "D", "D", "A"]);
 
   /*25.El ing. De sistemas de un banco de crédito necesita conocer de unalista de 2500 cuentas cuál es la que posee mayor cantidad y cuál es la queposee menor cantidad, de dinero. Escriba un algoritmo que realice loanterior, sin ordenar las cuentas.*/
-  class Vendedor {
+  class Account {
 
     //Constructor
     constructor({ id, saldo }) {
@@ -164,17 +164,21 @@
   }
 
   const checkSaldos = (cuentas) => {
-
-
+    maxV = 0;
+    minV = 99999999999999999999;
     for (const e of cuentas) {
 
+      if (e.getSaldo() > maxV) {
 
-
-
+        maxV = e.getSaldo();
+      }
+      if (e.saldo < minV) {
+        minV = e.saldo;
+      }
 
     }
 
-
+    return `Max: ${maxV} | Min: ${minV}`
 
   }
 
@@ -182,23 +186,195 @@
     cuentas = [];
 
     for (let i = 0; i < 25; i++) {
-      v = new Vendedor({ id: i, saldo: Math.round((Math.random() * 1000)) });
+      v = new Account({ id: i, saldo: Math.round((Math.random() * 1000)) });
       cuentas.push(v)
     }
 
     return cuentas;
   }
 
-  checkSaldos(AccGenerator())
 
-  /*26.Escribir   un   algoritmo   que   permita   calcular   y   mostrar   el   jornalmensual de una empresa de acuerdo con las siguientes especificaciones:·los trabajadores tienen dos turnos (nocturno y diurno)·la tarifa de las horas diurnas es de 10 pesos.·La tarifa de las nocturnas es de 20 pesos.·Ningún trabajador recibe nada por sábados o domingos.·El trabajador será despedido si sus horas trabajadas son menores que15.El algoritmo termina cuando sea dado cero como horas trabajadas.*/
+  document.getElementById("ejercicio25").innerHTML = checkSaldos(AccGenerator());
+
+
+  /*26.Escribir   un   algoritmo   que   permita   calcular   y   mostrar   el   jornal mensual de una empresa de acuerdo con las siguientes especificaciones:·los trabajadores tienen dos turnos (nocturno y diurno)·la tarifa de las horas diurnas es de 10 pesos.·La tarifa de las nocturnas es de 20 pesos.·Ningún trabajador recibe nada por sábados o domingos.·El trabajador será despedido si sus horas trabajadas son menores que 15.
+  El algoritmo termina cuando sea dado cero como horas trabajadas.*/
+
+  const jornalM = (horas = undefined, turno = undefined) => {
+    if (horas === undefined || turno === undefined) {
+      return "Ingresa todos los valores requeridos"
+    }
+
+    if (typeof horas !== "number") {
+      return "Por favor ingresa sólo numeros en las horas"
+    }
+
+    turnoN = turno.toLowerCase();
+
+    if ((turnoN !== "d") && turnoN !== "n") {
+      return "Por favor sólo puedes ingresar D ó N"
+    }
+    if (horas === 0) {
+      return 0
+    }
+    if (horas < 15) {
+      return "Despedido"
+    }
+
+    if (turnoN === "d") {
+      return (horas * 10);
+    } else {
+      return (horas * 20);
+    }
+
+
+  }
+
+  document.getElementById("ejercicio26").innerHTML = jornalM(25, "n");
+
 
   /*27.Escribir un algoritmo que determine cuántos trabajadores recibiránun salario mayor o igual a  500, dadas la tarifa y las horas trabajadas.*/
+  class Trabajador {
 
-  /*28.Escribir un algoritmo que clasifique a 50 personas según su edad ysexo, al final deberá escribir la cantidad de personas masculinas mayoresde edad, la cantidad de personas femeninas menores de edad, cantidad depersonas   mayores   y   menores,   además   deberá   indicar   el   porcentaje   querepresentan las personas mayores y las menores, de edad.*/
+    //Constructor
+    constructor({ horas, tarifa }) {
+      this.horas = horas;
+      this.tarifa = tarifa;
+      this.pago = this.getPago();
+
+
+    }
+
+    //Metodos
+
+
+
+    getPago() {
+      let pago = this.horas * this.tarifa;
+      return pago;
+    }
+
+  }
+  const trabajadores = () => {
+    function AccGen2() {
+      cuentas = [];
+
+      for (let i = 0; i < 25; i++) {
+        v = new Trabajador({ horas: Math.round((Math.random() * 10)), tarifa: Math.round((Math.random() * 400 + 10)) });
+        cuentas.push(v)
+      }
+      console.log(cuentas);
+
+      return cuentas;
+    }
+
+    newArr = AccGen2();
+    total = 0;
+    for (const e of newArr) {
+
+      if (e.pago > 500) {
+
+        total++;
+      }
+
+    }
+
+    return `${total} reciben un pago mayor a $500`;
+
+  }
+
+  document.getElementById("ejercicio27").innerHTML = trabajadores();
+
+
+  /*28.Escribir un algoritmo que clasifique a 50 personas según su edad ysexo, al final deberá escribir la cantidad de personas masculinas mayores de edad, la cantidad de personas femeninas menores de edad, cantidad depersonas   mayores   y   menores,   además   deberá   indicar   el   porcentaje   querepresentan las personas mayores y las menores, de edad.*/
+  console.log("*****************");
+  class Persona {
+
+    //Constructor
+    constructor({ edad, sexo }) {
+      this.edad = edad;
+      this.sexo = sexo;
+
+    }
+
+    //Metodos
+  }
+  const personas = () => {
+    function AccGen3() {
+      cuentas1 = [];
+
+      for (let i = 0; i < 50; i++) {
+        let sex1;
+        let aux1 = Math.round(Math.random());
+
+        if (aux1 === 0) {
+          sex1 = "h"
+        } else {
+          sex1 = "m";
+        }
+
+        v1 = new Persona({ edad: Math.round((Math.random() * 10) + (Math.random() + 15)), sexo: sex1 });
+
+        cuentas1.push(v1)
+
+      }
+
+
+      return cuentas1;
+    }
+
+    newArr = AccGen3();
+    console.log(newArr);
+    const mayores = newArr.filter(p => p.edad > 17);
+    const menores = newArr.filter(p => p.edad < 18);
+    const mayoresH = mayores.filter(p => p.sexo === "h")
+    const menoresM = menores.filter(p => p.sexo === "m")
+
+
+    const porMay = (100 / newArr.length) * mayores.length;
+    const porMen = (100 / newArr.length) * menores.length;
+
+    return `Mayores: ${mayores.length} (${porMay}%) Menores: ${menores.length} (${porMen}% | H+18: ${mayoresH.length} - M-18 ${menoresM.length}`
+
+  }
+
+  document.getElementById("ejercicio28").innerHTML = personas();
 
   /*29.Escribir un algoritmo que ordene una lista de números indicando alfinal la cantidad de números pares y la cantidad de números impares, eldato a ingresar es un número y se debe repetir el proceso mientras elnúmero ingresado sea diferente a cero.
   */
+
+  const orderNum = (arreglo = undefined) => {
+    if (!arreglo) return "Ingresa un arreglo"
+
+    if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+    if (arreglo.length === 0) {
+      return "El arreglo esta vacío"
+    }
+
+    if (!arreglo.every(e => typeof e === "number")) {
+      return `Asegurate de sólo ingresar numeros`
+    }
+    let tope = arreglo.findIndex(e => e === 0)
+    if (tope < 0) {
+      tope = arreglo.length;
+    }
+    arreglo = arreglo.splice(0, tope)
+
+    arreglo.sort();
+    const r1 = arreglo.filter(e => e % 2 === 0);
+    const r2 = arreglo.filter(e => e % 2 !== 0);
+
+    console.log(arreglo);
+    console.log(r1);
+    console.log(r2);
+
+    return `Arreglo ordenado: ${arreglo} | Pares: ${r1.length} Impares: ${r2.length}`
+
+  }
+
+
+  document.getElementById("ejercicio28").innerHTML = orderNum([1, 2, 3, 50, 4, 0, 8, 2, 1]);
 </script>
 
 </html>
