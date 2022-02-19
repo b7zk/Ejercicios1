@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Ejercicio 11</h1>
+  <h2>En consola</h2><br>
+  <h1>Ejercicio 12</h1>
+  <h2 id="ejercicio12"></h2><br>
+  <h1>Ejercicio 13</h1>
+  <h2 id="ejercicio13"></h2><br>
+  <h1>Ejercicio 14</h1>
+  <h2 id="ejercicio14"></h2><br>
+  <h1>Ejercicio 15</h1>
+  <h2 id="ejercicio15"></h2><br>
+  <h1>Ejercicio 16</h1>
+  <h2 id="ejercicio16"></h2><br>
+  <h1>Ejercicio 17</h1>
+  <h2 id="ejercicio17"></h2><br>
+  <h1>Ejercicio 18</h1>
+  <h2 id="ejercicio18"></h2><br>
+  <h1>Ejercicio 19</h1>
+  <h2 id="ejercicio19"></h2><br>
+  <h1>Ejercicio 20</h1>
+  <h2 id="ejercicio20"></h2><br>
+
+  <script>
+
+    //Ejercicio 11
+    /*Una tienda se dedica a la venta de computadoras, cada vendedor
+tiene un sueldo mensual pero además de su sueldo gana una comisión por
+venta: Si el monto de venta es mayor de 10,000 la comisión será del 15%.
+Si el monto de venta es mayor o igual a 5,000 y menor de 10,000 la
+comisión es del 5%. Si el monto de la venta es menor que 5,000 no tiene
+comisión. Escribir un algoritmo que calcule el sueldo total de cada
+vendedor*/
+    class Vendedor {
+
+      //Constructor
+      constructor({ id, nombre, venta }) {
+        this.nombre = nombre;
+        this.venta = this.checkVenta(venta);
+        this.comisionV = this.comision(this.venta);
+      }
+
+      checkString(texto, prop) {
+        if (!texto) return console.warn(`Debes ingresar un valor en ${prop}`)
+        if (typeof texto !== "string") return console.error("El dato ingresado no es una cadena de texto");
+        return true;
+      }
+      checkName(texto) {
+        if (this.checkString(texto)) {
+          let expReg = /^[A-Za-zÑñÁÉÍÓÚáéíóúüÜ!?\s]+$/g.test(texto);
+          return (expReg) ? true : false
+        }
+
+      }
+
+      //Metodos
+      checkVenta(venta) {
+        if (venta === undefined) {
+          return 0;
+        }
+        if (typeof venta !== "number") {
+          return 0;
+        }
+        return venta;
+      }
+      comision(venta) {
+
+        let comi;
+        (venta < 5000) ? comi = 0 : (venta < 10000) ? comi = (venta * 0.05) : comi = (venta * 0.15)
+
+        return comi;
+      }
+
+      print() {
+        console.log(`El vendedor: ${this.nombre} ha vendido ${this.venta} generando una comision de: ${this.comisionV}\n`);
+
+      }
+
+    }
+
+    const vendedores = [{
+      id: 1,
+      nombre: "Osmar",
+      venta: 20000
+    }, {
+      id: 2,
+      nombre: "Pablito",
+      venta: 200
+    }, {
+      id: 3,
+      nombre: "Raul",
+      venta: 7000
+    }]
+    vendedores.forEach(e => new Vendedor(e).print());
+
+    //Ejercicio 12
+    /*Katthy organiza una fiesta en la cual una computadora controla elingreso mediante 5 claves. Si se ingresa al menos una clave incorrecta lacomputadora   imprimirá   "TE   EQUIVOCASTE   DE   FIESTA"   y   no   permitirá   elingreso. Si las 5 claves son correctas imprimirá "BIENVENIDO A LA FIESTA".Escribir un algoritmo que realice lo anterior.Las Claves son: 1: "TIENES"2: "QUE SER"3: "INVITADO"4: "PARA"5: "INGRESAR"*/
+
+    const contraChecker = (arreglo = undefined) => {
+
+      if (!arreglo) return "Ingresa un arreglo"
+
+      if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+      if (arreglo.length === 0) {
+        return "El arreglo esta vacío"
+      }
+      let wr = 0;
+      let contras = ["TIENES", "QUE SER", "INVITADO", "PARA", "INGRESAR"]
+
+      for (let i = 0; i < 5; i++) {
+        if (arreglo[i] !== contras[i]) {
+          wr++;
+        }
+      }
+      if (wr > 0) {
+        return `TE EQUIVOCASTE DE FIESTA | Has introducido ${wr} claves erroneas`
+      }
+
+      return `Clave Correcta | BIENVENIDO A LA FIESTA`
+    }
+
+    document.getElementById("ejercicio12").innerHTML = contraChecker(["TIENES", "QUE SER", "INVITADO", "PARA", "INGRESAR"]);
+
+    //Ejercicio 13
+    /*Escribir   un   algoritmo   que   calcule   las   raíces   de   una   ecuacióncuadrática cuya forma canónica es:Ax**2 + By + C = 0Solo se calcularán raíces reales. si el discriminante en menor de 0,imprimir un mensaje que indique que existen dos raíces imaginarias. Loscoeficientes A,B,C serán ingresados.*/
+
+    const cuadratic = (a = undefined, b = undefined, c = undefined) => {
+
+      if (a === undefined || b === undefined || c === undefined) {
+        return `Debes ingresar todos los valores`
+      }
+      if (typeof a !== "number" || typeof c !== "number" || typeof b !== "number") {
+        return `Asegurate de ingresar sólo numeros`
+      }
+      d = (Math.pow(b, 2)) - ((4 * a) * c)
+
+      if (d < 0) return `El discriminante ${d} resulta imaginario`
+
+      if (d > 0) {
+        x1 = ((-b + (Math.sqrt(d))) / (2 * a))
+        x2 = ((-b - (Math.sqrt(d))) / (2 * a))
+
+        return `x1: ${x1} x2:${x2} `
+      } else {
+        x = -b / (2 * a)
+        return `unica x: ${x}`
+      }
+
+
+
+    }
+
+    document.getElementById("ejercicio13").innerHTML = cuadratic(1, -1, -12);
+
+    //Ejercicio 14
+    /*"TIENDAS PATITO" se encuentra de aniversario y ha programado unaserie de ofertas con la finalidad de brindar facilidades a sus clientes yal a vez de incrementar sus ventas. Estas ofertas se basan específicamenteen un porcentaje de descuento sobre el total de compra el cual varia deacuerdo al monto. Por un monto mayor o igual a $500 se hará un descuentodel 30%. Por un monto menor de $500 pero mayor o igual a 200 se hará undescuento del 20%.Por un monto menor de $200 pero mayor o igual a 100 sehará un descuento del 10%. Escribir un algoritmo que calcule la cantidadtotal a pagar de una compra.*/
+
+    const ventaDesc = (total = undefined) => {
+      if (total === undefined) {
+        return "Debes ingresar el monto de venta"
+      }
+
+      if (typeof total !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+
+      if (total <= 0) {
+        return "La venta no puede ser menor a 1"
+      }
+      let desc;
+      (total < 100) ? desc = 00 : (total < 200) ? desc = 0.1 : (total < 500) ? desc = 0.2 : desc = 0.3;
+
+      let nTotal = total - (total * desc);
+
+      return `Total a pagar: $${nTotal} de $${total}`
+    }
+
+    document.getElementById("ejercicio14").innerHTML = ventaDesc(500);
+
+    //Ejercicio 15
+    /*Escribir un algoritmo que permita escoger en un conjunto de números  naturales: Cuáles son menores que 15.Cuáles son mayores de 50.Cuáles están comprendidos entre 25 y 50.El algoritmo termina con el ingreso de un número negativo.*/
+
+    const order1 = (arreglo = undefined) => {
+      if (!arreglo) return "Ingresa un arreglo"
+
+      if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+      if (arreglo.length === 0) {
+        return "El arreglo esta vacío"
+      }
+
+      if (!arreglo.every(e => typeof e === "number")) {
+        return `Asegurate de sólo ingresar numeros`
+      }
+      let tope = arreglo.findIndex(e => e < 0)
+      if (tope < 0) {
+        tope = arreglo.length;
+      }
+
+      arreglo = arreglo.splice(0, tope)
+
+      const r1 = arreglo.filter(e => e < 15);
+      const r2 = arreglo.filter(e => e > 50);
+      const r3 = arreglo.filter(e => (e > 15 && e < 50));
+      return `Menores que 15: ${r1} | Mayores que 50: ${r2} | Entre 15 y 50: ${r3}`
+    }
+
+    document.getElementById("ejercicio15").innerHTML = order1([1, 2, 30, 4, 50, 6, -7, 70, 8, 9]);
+    //Ejercicio 16
+    /*Calcular mediante un algoritmo repetitivo la suma de los  N primeros números naturales.*/
+
+    const primerosN = (n = undefined) => {
+      if (n === undefined) {
+        return "Debes ingresar un numero limite"
+      }
+
+      if (typeof n !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+
+      if (n <= 0) {
+        return "el numero no puede ser menor a 1"
+      }
+      let suma = 0;
+      for (let i = 1; i < n + 1; i++) {
+        suma += i;
+      }
+
+      return `La suma de los primeros ${n} numeros naturales es: ${suma}`
+
+    }
+    document.getElementById("ejercicio16").innerHTML = primerosN(15);
+    //Ejercicio 17
+    /*Modificar el ejercicio 1 para obtener la suma de los salarios de 200trabajadores.*/
+
+    const pagoA = (arreglo = [hora = undefined, tarifa = undefined]) => {
+      if (!arreglo) return "Ingresa un arreglo"
+
+      if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+      if (arreglo.length === 0) {
+        return "El arreglo esta vacío"
+      }
+
+      if (!arreglo.every(e => e.every((f => typeof f === "number")))) {
+        return `Asegurate de sólo ingresar numeros`
+      }
+
+      const pagoF = (horas, tarifa) => {
+
+        pago = horas * tarifa;
+        if (horas > 40) {
+          pago += (horas * tarifa) / 2;
+        }
+        return pago;
+      }
+      let sum = 0;
+
+      for (const e of arreglo) {
+        p = pagoF(e[0], e[1]);
+        if (typeof p === "number") {
+          console.log(`Pago de posicion ${e} es: ${p}`);
+          sum += p;
+        }
+      }
+
+      return `La suma total de los ${arreglo.length} es de: ${sum}`
+    }
+
+    document.getElementById("ejercicio17").innerHTML = pagoA([[20, 200], [30, 300], [50, 400]]);
+
+    //Ejercicio 18
+    /*Dadas N notas de un estudiante, escribir un algoritmo que calcule:a) Cuántas notas tiene desaprobadas.b) Cuántas aprobadas.c) El promedio de notas.d) El promedio de notas aprobadas y el de desaprobadas.*/
+    const estuCheck = (arreglo = undefined) => {
+      if (!arreglo) return "Ingresa un arreglo"
+
+      if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+      if (arreglo.length === 0) {
+        return "El arreglo esta vacío"
+      }
+
+      if (!arreglo.every(e => typeof e === "number")) {
+        return `Asegurate de sólo ingresar numeros`
+      }
+
+      if (!arreglo.every(e => (e > 0 && e < 11))) {
+        return `Las notas deben ser entre 0 y 10`
+      }
+
+      let a = 0, b = 0, c = 0, d1 = 0, d2 = 0
+
+      for (const i of arreglo) {
+        if (i > 5) {
+          //aprobadas
+          b++;
+          d2 += i;
+        } else {
+          a++;
+          d1 += i;
+        }
+
+
+      }
+      c = (d2 + d1) / (arreglo.length)
+      return `Desaprobadas: ${a} | Aprobadas: ${b} | Promedio general: ${c.toFixed(1)} | Promedio Desaprobadas: ${(d1 / a).toFixed(1)} | Promedio Aprobadas: ${(d2 / b).toFixed(1)}`
+
+    }
+
+    document.getElementById("ejercicio18").innerHTML = estuCheck([10, 10, 8, 5, 2]);
+    //Ejercicio 19
+    /*Dado un número n, escribir un algoritmo que determine la suma de sus dígitos.*/
+
+    const suma2 = (n = undefined) => {
+      if (n === undefined) {
+        return "Debes ingresar un numero limite"
+      }
+
+      if (typeof n !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+
+      if (n <= 0) {
+        return "el numero no puede ser menor a 1"
+      }
+
+      nS = n.toString();
+      suma = 0;
+      for (let i = 0; i < nS.length; i++) {
+        suma += parseInt(nS[i], 10);
+      }
+
+      return suma;
+    }
+    document.getElementById("ejercicio19").innerHTML = suma2(12);
+    //Ejercicio 20
+    /*Realizar   un   algoritmo   que   permita   pedir   50   números   naturales   ydetermine e imprima cuántos son pares, impares, positivos y negativos.*/
+
+    const parImp = (arreglo = undefined) => {
+      if (!arreglo) return "Ingresa un arreglo"
+
+      if (!Array.isArray(arreglo)) return "Debes introducir un arreglo";
+
+      if (arreglo.length === 0) {
+        return "El arreglo esta vacío"
+      }
+      if (arreglo.length > 50) {
+        return "El arreglo no puede ser mayor a 50"
+      }
+
+      if (!arreglo.every(e => typeof e === "number")) {
+        return `Asegurate de sólo ingresar numeros`
+      }
+      let par = 0, impar = 0, neg = 0, pos = 0;
+      for (const i of arreglo) {
+        if (i % 2 !== 0) {
+          impar++;
+        } else {
+          par++;
+        }
+        if (i > 0) {
+          pos++;
+        } else {
+          neg++;
+        }
+      }
+      return `Pares: ${par} | Impar ${impar} | Negativos: ${neg} | Positivos ${pos}`
+    }
+    document.getElementById("ejercicio20").innerHTML = parImp([12, -10, 4, 4, 6, 2, 7, 9, 3, -3, 6, -8, -10, 89, 102, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 5, -4, -56, 342, -345, -3, -1324, 12, 45, 4, 2, 4, 2, 7, 9, 2, 0, 3, 134, 57, 23, 5, 57, -12, 435, -13, 4, 234, 123]);
+  </script>
+</body>
+
+
+</html>

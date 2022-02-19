@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>Ejercicio 1</h1>
+  <h2 id="ejercicio1"></h2><br>
+  <h1>Ejercicio 2</h1>
+  <h2 id="ejercicio2"></h2><br>
+  <h1>Ejercicio 3</h1>
+  <h2 id="ejercicio3"></h2><br>
+  <h1>Ejercicio 4</h1>
+  <h2 id="ejercicio4"></h2><br>
+  <h1>Ejercicio 5</h1>
+  <h2 id="ejercicio5"></h2><br>
+  <h1>Ejercicio 6</h1>
+  <h2 id="ejercicio6"></h2><br>
+  <h1>Ejercicio 7</h1>
+  <h2 id="ejercicio7"></h2><br>
+  <h1>Ejercicio 8</h1>
+  <h2 id="ejercicio8"> </h2><br>
+  <h1>Ejercicio 9</h1>
+  <h2 id="ejercicio9"></h2><br>
+  <h1>Ejercicio 10</h1>
+  <h2 id="ejercicio10"></h2><br>
+
+  <script>
+    //A un trabajador le pagan según sus horas trabajadas y una tarifa de pago por hora. Si la cantidad de horas trabajadas es mayor a 40 horas, la tarifa   se   incrementa   en   un   50%   para   las   horas   extras.   Escribir un algoritmo que calcule el salario del trabajador dadas las horas trabajadasy la tarifa
+    const pagoF = (horas = undefined, tarifa = undefined) => {
+
+      if (horas === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+      if (tarifa === undefined) {
+        return "Debes ingresar la tarifa por hora"
+      }
+      if (typeof horas !== "number" || typeof tarifa !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      pago = horas * tarifa;
+      if (horas > 40) {
+        pago += (horas * tarifa) / 2;
+      }
+
+      return `Horas trabajadas: ${horas}\nTarifa por hora:${tarifa} Pago total: ${pago}`;
+
+    }
+
+    document.getElementById("ejercicio1").innerHTML = pagoF(100, 20);
+
+    //Ejercicio 2
+    /*A un  trabajador le descuentan de su sueldo el 10% si su sueldo es menor oigual a 1000, por encima de 1000 y hasta 2000 el 5% del adicional, y porencima de 2000 el 3% del adicional. Escribir un algoritmo que calcule eldescuento y sueldo neto que recibe el trabajador dado su sueldo.*/
+    const impuesto = (sueldo = undefined) => {
+
+      if (sueldo === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+
+      if (typeof sueldo !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      let sueldoTotal = sueldo;
+      let sueldoSum = 0;
+      if (sueldo > 2000) {
+        sueldoSum += (sueldo - 2000) * 0.97;
+        sueldo = 2000;
+      }
+      if (sueldo > 1000) {
+        sueldoSum += (sueldo - 1000) * 0.95;
+        sueldo = 1000;
+      }
+      sueldoSum += (sueldo) * 0.9;
+
+      return `Del sueldo: $${sueldoTotal} El pago será de: $${sueldoSum} neto`
+    }
+    document.getElementById("ejercicio2").innerHTML = impuesto(3000);
+
+    //Ejercicio 3
+    /*Escribir un algoritmo que lea una cantidad y calcule el descuento
+    considerando que si la cantidad dada está por encima de 100 el descuento
+    es el 10% y si está por debajo de 100 el descuento es el 2%.*/
+
+    const descuento = (precio = undefined) => {
+
+      if (precio === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+
+      if (typeof precio !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      let total = 0;
+      let desc = 0;
+      if (precio > 100) {
+        total = precio * 0.9;
+        desc = "10%"
+      } else {
+        total = precio * 0.98;
+        desc = "2%"
+      }
+
+      return `Del precio: $${precio} Pagaras: $${total} gracias al descuento del ${desc}`
+    }
+    document.getElementById("ejercicio3").innerHTML = descuento(90);
+
+    //Ejercicio 4
+    /* Escribir un algoritmo que lea un tiempo en segundos y que calcule los
+   segundos restantes que le correspondan para convertirse exactamente en
+     minutos. */
+
+    const completSeg = (segundos = undefined) => {
+
+      if (segundos === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+
+      if (typeof segundos !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      segFal = 60 - (segundos % 60);
+      totMin = (Math.floor(segundos / 60)) + 1;
+
+      return `De los ${segundos} segundos, faltan ${segFal} segundos para convertirse en ${totMin} minutos`;
+    }
+    document.getElementById("ejercicio4").innerHTML = completSeg(312);
+
+    //Ejercicio 5
+    /*Escribir un algoritmo que lea un tiempo en minutos y que calcule los días,
+    horas y minutos que le corresponden.*/
+    const min2D = (minutos = undefined) => {
+
+      if (minutos === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+
+      if (typeof minutos !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      /* 
+      Con ciclos,
+      min = minutos;
+      dias = 0;
+      horas = 0;
+  
+      while (min >= 1440) {
+        min -= 1440;
+        dias++;
+      }
+      while (min >= 60) {
+        min -= 60;
+        horas++;
+      } */
+
+      //con funciones del Math
+      let dias = Math.floor(minutos / 1440);
+      let rest = minutos % 1440;
+      let horas = Math.floor(rest / 60);
+      let min = minutos % 60;
+
+
+      return `En ${minutos} minutos existen: ${dias} dia(s) con ${horas} hora(s) y ${min} minuto(s)`
+    }
+    document.getElementById("ejercicio5").innerHTML = min2D(1681);
+
+    //Ejercicio 6
+    /*scribir un algoritmo que lea las horas trabajadas de una persona y la
+    tarifa de pago para calcular su salario e imprimirlo.*/
+    const sueldoTot = (horas = undefined, tarifa = undefined) => {
+
+      if (horas === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+      if (tarifa === undefined) {
+        return "Debes ingresar la tarifa por hora"
+      }
+      if (typeof horas !== "number" || typeof tarifa !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      pago = horas * tarifa;
+
+
+      return `Horas trabajadas: ${horas}\nTarifa por hora:${tarifa} Salario: ${pago}`;
+
+    }
+    document.getElementById("ejercicio6").innerHTML = sueldoTot(100, 20);
+
+    //Ejercicio 7
+    /*Escribir el algoritmo que permita emitir la factura correspondiente a una
+  compra de un articulo determinado, del que se adquieren una o varias
+  unidades. El IVA es del 15% y si el precio neto ( precio venta mas IVA) es
+  mayor de 50.00 pesos se debe realizar un descuento del 5%.*/
+    const factura = (precio = undefined, cantidad = undefined) => {
+
+      if (precio === undefined) {
+        return "Debes ingresar el precio"
+      }
+      if (cantidad === undefined) {
+        return "Debes ingresar la cantidad de piezas"
+      }
+      if (typeof precio !== "number" || typeof cantidad !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+
+      let tot = (precio * cantidad) + ((precio * cantidad) * 0.15);
+
+      if (tot > 50) {
+        tot -= (tot * 0.05)
+      }
+      return `Precio total: ${tot}\nPrecio por unidad:${precio} Piezas: ${cantidad}`;
+
+    }
+    document.getElementById("ejercicio7").innerHTML = factura(100, 20);
+
+    //Ejercicio 8
+    /*Escribir el algoritmo que muestre el mensaje de acuerdo a la edad
+  ingresada: Si la edad es de 0 a 10 años “niño”, si la edad es de 11 a 14
+  años “púber” , si la edad es de 15 a 18 años “ adolescente” , si la edad
+  es de 19 a 25 años “joven” , si la edad es de 26 a 65 años “ adulto” , si
+  la edad es mayor de 65 “anciano”*/
+
+    const personDef = (edad = undefined) => {
+
+      if (edad === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+
+      if (typeof edad !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+
+      if ((edad < 0) || (edad > 120)) {
+        return "Ingresa tu edad real"
+      }
+      let texto;
+      (edad <= 10) ? texto = "niño" : (edad <= 14) ? texto = "puber" : (edad <= 18) ? texto = "adolescente" : (edad <= 25) ? texto = "joven" : (edad <= 65) ? texto = "adulto" : texto = "anciano"
+
+      return `A la edad de ${edad} eres un ${texto}`
+    }
+    document.getElementById("ejercicio8").innerHTML = personDef(15);
+
+    //Ejercicio 9
+    /*Escribir el algoritmo que lea una hora y que muestre la programación de
+    acuerdo al horario en que se transmite “dibujos animados ” : Si es de 10 a 12 horas, “ tele serie ” : si es de 13 a 16 horas, “ novelas repetidas ” : si es de 16 a 18 horas, “dibujos animados ” : si es de 18 a 22 horas, “noticiero” : si es de 22 a 23 horas*/
+
+    const program1 = (hora = undefined) => {
+      if (hora === undefined) {
+        return "Debes ingresar las horas trabajadas"
+      }
+      if (typeof hora !== "number") {
+        return "Por favor ingresa sólo numeros"
+      }
+      if ((hora < 10) || (hora > 23)) {
+        return "Ingresa una hora valida"
+      }
+      let texto;
+      ((hora <= 12) || ((hora >= 18) && (hora < 22))) ? texto = "Dibujos animados" : (hora < 16) ? texto = "Tele serie" : (hora < 18) ? texto = "Novela Repetida" : texto = "Noticiero"
+
+      return `Son las ${hora} y estás viendo un(a): ${texto}`
+    }
+    document.getElementById("ejercicio9").innerHTML = program1(18);
+
+    //Ejercicio 10
+    /*Dadas 3 longitudes, escribir un algoritmo que determine mediante un
+    mensaje si tales longitudes forman un triangulo: equilátero (cuando sus
+    tres lados son iguales), isósceles (cuando dos de sus lados son iguales) o
+    escaleno (cuando sus tres lados son diferentes), o no forman triangulo
+    (cada lado tiene que ser menor que la suma de los otros dos*/
+
+    const triangle = (l1 = undefined, l2 = undefined, l3 = undefined) => {
+      if ((l1 === undefined) || (l2 === undefined) || (l3 === undefined)) {
+        return "Debes ingresar todas las longitudes"
+      }
+      if ((typeof l1 !== "number") || (typeof l2 !== "number") || (typeof l3 !== "number")) {
+        return "Por favor ingresa sólo numeros en los campos"
+      }
+
+      let tipo;
+      ((l1 === l2) && (l1 === l3)) ? tipo = "Equilatero" : ((l1 === l2) || (l1 === l3) || (l2 === l3)) ? tipo = "Isoceles" : tipo = "Escaleno"
+
+      return `El traingulo con propiedades: ${l1}x${l2}x${l3} es un Triangulo ${tipo}`
+    }
+    document.getElementById("ejercicio10").innerHTML = triangle(2, 3, 4);
+  </script>
+</body>
+
+
+</html>
